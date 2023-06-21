@@ -3,11 +3,13 @@
 #include <string.h>
 #include <time.h>
 #include<dirent.h>
+
 int genererID() {
 
     srand(time(NULL));
     return rand() % 10000000000;
 }
+
 void compterSexes() {
     FILE* fAllPatients = fopen("AllPatients.txt", "r");
     if (fAllPatients == NULL) {
@@ -26,7 +28,8 @@ void compterSexes() {
             sscanf(ligne, "Sexe : %s", sexe);
             if (strcmp(sexe, "Homme") == 0) {
                 countMale++;
-            } else if (strcmp(sexe, "Femme") == 0) {
+            } 
+            else if (strcmp(sexe, "Femme") == 0) {
                 countFemale++;
             }
         }
@@ -77,7 +80,7 @@ float calculerAgeMoyen() {
             fgets(ligne, sizeof(ligne), fAllPatients); // Read the line containing sex
             fgets(ligne, sizeof(ligne), fAllPatients); // Read the line containing age
 
-            if (sscanf(ligne, "Âge : %d", &age) == 1) {
+            if (sscanf(ligne, "Ã‚ge : %d", &age) == 1) {
                 sommeAges += age;
                 totalPatients++;
             }
@@ -87,7 +90,7 @@ float calculerAgeMoyen() {
     fclose(fAllPatients);
 
     if (totalPatients == 0) {
-        printf("Aucun patient trouvé.\n");
+        printf("Aucun patient trouvÃ©.\n");
         return 0;
     }
 
@@ -178,7 +181,7 @@ void recherche1(char* nomE){
     }
 
     if (!patientTrouve) {
-        printf("Le patient n'a pas été trouvé.\n");
+        printf("Le patient n'a pas Ã©tÃ© trouvÃ©.\n");
     }
 
     fclose(fAllPatients);
@@ -211,7 +214,7 @@ void recherche0(char * nomE0){
     }
 
     if (!patientTrouve) {
-        printf("Le patient n'a pas été trouvé.\n");
+        printf("Le patient n'a pas Ã©tÃ© trouvÃ©.\n");
     }
 
     fclose(fAllPatients);
@@ -236,7 +239,7 @@ void supprimerDossierPatient(char* nom) {
     if (statut != 0) {
         printf("Erreur lors de la suppression du dossier du patient %s.\n", nom);
     } else {
-        printf("Dossier du patient %s supprimé avec succès.\n", nom);
+        printf("Dossier du patient %s supprimÃ© avec succÃ¨s.\n", nom);
 
         // Remove patient's information from AllPatients.txt
         FILE* fAllPatients = fopen("AllPatients.txt", "r");
@@ -294,11 +297,11 @@ int AjouterP() {
 printf("Entrez le nom de la maladie : ");
 scanf("%49s",&nomMaladie);
 
-    printf("Entrez l'âge du patient : ");
+    printf("Entrez l'Ã¢ge du patient : ");
     scanf("%d", &age);
     getchar();
 
-    printf("Niveau d'urgence (1 niveau très urgent, 2 niveau urgen,  3 niveau modéré, 4 niveau faible, 5 niveau très faible) : ");
+    printf("Niveau d'urgence (1  niveau urgen,  2 niveau moyen, 3 niveau faible) : ");
     scanf("%d", &niveauUrgence);
     getchar();
 
@@ -308,13 +311,13 @@ scanf("%49s",&nomMaladie);
     fichier = fopen("listes.txt", "w");
 
     if (fichier == NULL) {
-        printf("Erreur lors de la création du fichier.\n");
+        printf("Erreur lors de la crÃ©ation du fichier.\n");
         return 1;
     }
     fprintf(fichier, "ID du patient : \n%d", idPatient);
     fprintf(fichier, "NOM du patient : \n%s", nomPatient);
     fprintf(fichier, "Sexe : \n%s", sexe);
-    fprintf(fichier, "Âge : \n%d", age);
+    fprintf(fichier, "Ã‚ge : \n%d", age);
     fprintf(fichier, "Adresse : \n%s", adresse);
     fprintf(fichier, "Nom de la maladie : \n%s", nomMaladie);
     fclose(fichier);
@@ -331,7 +334,7 @@ scanf("%49s",&nomMaladie);
     c++;
     FILE *fMALAD = fopen(fichierMladie, "w");
     if (fMALAD == NULL) {
-        printf("Erreur lors de la création du fichier ID_%d.txt.\n", idPatient);
+        printf("Erreur lors de la crÃ©ation du fichier ID_%d.txt.\n", idPatient);
         return 1;
 
     }
@@ -344,7 +347,7 @@ if(c==0){
     sprintf(fichierID, "%s/ID_%d.txt", cheminDossier, idPatient);
     FILE *fID = fopen(fichierID, "w");
     if (fID == NULL) {
-        printf("Erreur lors de la création du fichier ID_%d.txt.\n", idPatient);
+        printf("Erreur lors de la crÃ©ation du fichier ID_%d.txt.\n", idPatient);
         return 1;
     }
     fprintf(fID, "ID du patient : %d\n", idPatient);
@@ -355,31 +358,25 @@ if(c==0){
     sprintf(fichierPatient, "%s/Inf_%s.txt", cheminDossier, nomPatient);
     FILE *fPatient = fopen(fichierPatient, "w");
     if (fPatient == NULL) {
-        printf("Erreur lors de la création du fichier Informations_%s.txt.\n", nomPatient);
+        printf("Erreur lors de la crÃ©ation du fichier Informations_%s.txt.\n", nomPatient);
         return 1;
     }
     fprintf(fPatient, "Nom : %s\n", nomPatient);
     fprintf(fPatient, "Sexe : %s\n", sexe);
-    fprintf(fPatient, "Âge : %d\n", age);
+    fprintf(fPatient, "Ã‚ge : %d\n", age);
     fprintf(fPatient, "Adresse : %s\n", adresse);
     fprintf(fPatient, "maladie : %s\n",nomMaladie);
 
 
     switch (niveauUrgence) {
         case 1:
-            fprintf(fPatient, "Type d'urgence : niveau très urgent\n");
-            break;
-        case 2:
             fprintf(fPatient, "Type d'urgence : niveau urgent\n");
             break;
+        case 2:
+            fprintf(fPatient, "Type d'urgence : niveau moyen\n");
+            break;
         case 3:
-            fprintf(fPatient, "Type d'urgence : niveau modéré\n");
-            break;
-        case 4:
             fprintf(fPatient, "Type d'urgence : niveau faible\n");
-            break;
-        case 5:
-            fprintf(fPatient, "Type d'urgence : niveau très faible\n");
             break;
         default:
             fprintf(fPatient, "Type d'urgence : Inconnu\n");
@@ -391,7 +388,7 @@ if(c==0){
     sprintf(fichierMladie, "%s/malad_%s.txt", cheminDossier, nomMaladie);
     FILE *fMALAD = fopen(fichierMladie, "w");
     if (fMALAD == NULL) {
-        printf("Erreur lors de la création du fichier ID_%d.txt.\n", idPatient);
+        printf("Erreur lors de la crÃ©ation du fichier ID_%d.txt.\n", idPatient);
         return 1;
     }
 
@@ -411,11 +408,11 @@ if(c==0){
     time(&tempsActuel);
     tempsInfo = localtime(&tempsActuel);
     strftime(datePresence, sizeof(datePresence), "%Y-%m-%d", tempsInfo);
-    fprintf(fAllPatients, "Date de présence : %s\t", datePresence);
+    fprintf(fAllPatients, "Date de prÃ©sence : %s\t", datePresence);
 
     fclose(fAllPatients);
 
-    printf("Créé avec succès.\n");
+    printf("CrÃ©Ã© avec succÃ¨s.\n");
 
     return 0;
 
@@ -434,10 +431,10 @@ void afficherMenu() {
 }
 void afficherStatistiques() {
 
-    printf("\n--- Statistiques de l'hôpital ---\n");
+    printf("\n--- Statistiques de l'hÃ´pital ---\n");
     printf("Nombre de maladies : %d\n", compterMaladies());
     compterSexes();
-    printf("Âge moyen des patients : %.2f\n", calculerAgeMoyen());
+    printf("Ã‚ge moyen des patients : %.2f\n", calculerAgeMoyen());
 
 }
 void afficherrecherche (){
@@ -462,8 +459,8 @@ int main () {
                  scanf("%d", &choix);
                  if (choix==21){AjouterP();break;}
                  if (choix==22){
-                 printf("pour modifier un patient taper le meme nom du patient\n");
-                 AjouterP();
+                   printf("pour modifier un patient taper le meme nom du patient\n");
+                   AjouterP();
                  break;}
                  break;
                  }
@@ -502,7 +499,7 @@ int main () {
                 printf("Au revoir !\n");
                 break;
             default:
-                printf("Choix invalide. Veuillez réessayer.\n");
+                printf("Choix invalide. Veuillez rÃ©essayer.\n");
                 break;
         }
 
